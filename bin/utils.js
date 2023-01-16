@@ -1,10 +1,11 @@
 import * as fs from 'node:fs';
-import * as path from 'path';
+import * as _ from 'lodash';
+//import * as path from 'path';
 
-const absPath = (filePath) => path.resolve('../frontend-project-46', '/bin', filePath);
+//export const absPath = (filePath) => path.resolve('../', '/bin', filePath);
 
 export const getObjectFromJson = (filePath, encoding = "utf8") => {
-    const obj = JSON.parse(fs.readFileSync(absPath(filePath)));
+    const obj = JSON.parse(fs.readFileSync(filePath));
     return obj;
 };
 
@@ -28,5 +29,11 @@ export const getCompareObject = (obj1, obj2) => {
     return result;    
 }
 
-//const absPath = (filePath) => path.resolve('../frontend-project-46', '/bin', filePath);
-    
+export const getStringFromObject = (obj) => {
+    let result = '';
+    const objKey =  Object.keys(obj);
+    for (const key of objKey) {
+        result += `${key}: ${obj[key]}\n`;
+    }
+    return result;
+}
