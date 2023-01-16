@@ -1,8 +1,10 @@
 import * as fs from 'node:fs';
+import * as path from 'path';
 
+const absPath = (filePath) => path.resolve('../frontend-project-46', '/bin', filePath);
 
 export const getObjectFromJson = (filePath, encoding = "utf8") => {
-    const obj = JSON.parse(fs.readFileSync(filePath));
+    const obj = JSON.parse(fs.readFileSync(absPath(filePath)));
     return obj;
 };
 
@@ -25,3 +27,6 @@ export const getCompareObject = (obj1, obj2) => {
     }
     return result;    
 }
+
+//const absPath = (filePath) => path.resolve('../frontend-project-46', '/bin', filePath);
+    

@@ -12,8 +12,8 @@ program
             const file1 = getObjectFromJson(filepath1);
             const file2 = getObjectFromJson(filepath2);
             const result = getCompareObject(file1, file2);
-            
-            console.log(result);
+                        
+            console.log(resultSort);
             })
     .option('-f, --format <type>', 'output format')
     .parse();
