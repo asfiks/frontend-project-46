@@ -1,4 +1,4 @@
-import * as fs from 'node:fs';
+/*import * as fs from 'node:fs';
 import * as _ from 'lodash';
 //import * as path from 'path';
 
@@ -30,7 +30,7 @@ export const getCompareObject = (obj1, obj2) => {
     return result;    
 }
 
-/*export const getStringFromObject = (obj) => {
+export const getStringFromObject = (obj) => {
     let result = '';
     const objKey =  Object.keys(obj);
     for (const key of objKey) {
