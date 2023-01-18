@@ -21,23 +21,32 @@ const getCompareObject = (obj1, obj2) => {
       const obj = {}
       if (objKey2.includes(key)) {
         if (obj1[key] === obj2[key]) {
-        result.push({key: key, value: obj1[key]});
+        result.push({name: key, value: obj1[key], id: ' '});
         } else {
-        result.push({key: `- ${key}`, value: obj1[key]});
-        result.push({key: `+ ${key}`, value: obj2[key]});
+        result.push({name: key, value: obj1[key], id: '-'});
+        result.push({name: key, value: obj2[key], id: '+'});
         }
-       } else if (!objKey2.includes(key)) result.push({key: `- ${key}`, value: obj1[key]});
+       } else if (!objKey2.includes(key)) result.push({name: key, value: obj1[key], id: '-'});
     }
     for (const key of objKey2) {
-      if (!objKey1.includes(key)) result.push({key: `+ ${key}`, value: obj2[key]});
+      if (!objKey1.includes(key)) result.push({name: key, value: obj2[key], id: '+'});
     }
     return result;    
 };
 
+const sortDiff = (arr) => _.sortBy(arr, 'name');
+const getStrinfFromArr = (arr) => {
+  const result = arr.map((a) => `${a.id} ${a.name}: ${a.value}`);
+  const stringResult = result.join('\n');
+  return stringResult;
+}
+
 const genDiff = (filePath1, filePath2) => {
     const file1 = getObjectFromJson(filePath1);
     const file2 = getObjectFromJson(filePath2);
-    return getCompareObject(file1, file2);
+    const resulrArr =  getCompareObject(file1, file2);
+    const sortArr = sortDiff(resulrArr);
+    return getStrinfFromArr(sortArr);
 };
 
 export default genDiff;
