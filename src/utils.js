@@ -1,4 +1,4 @@
-/*import * as fs from 'node:fs';
+/* import * as fs from 'node:fs';
 import * as _ from 'lodash';
 //import * as path from 'path';
 
@@ -27,7 +27,7 @@ export const getCompareObject = (obj1, obj2) => {
     for (const key of objKey2) {
       if (!objKey1.includes(key)) result.push({key: `+ ${key}`, value: obj2[key]});
     }
-    return result;    
+    return result;
 }
 
 export const getStringFromObject = (obj) => {
@@ -37,4 +37,4 @@ export const getStringFromObject = (obj) => {
         result += `${key}: ${obj[key]}\n`;
     }
     return result;
-}*/
+} */
