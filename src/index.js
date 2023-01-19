@@ -10,7 +10,7 @@ const isJson = (filePath) => {
   return arrPath[arrPath.length - 1] === 'json';
 };
 
-const getObjectFromJson = (filePath, encoding = 'utf8') => {
+const getObjectFromJson = (filePath) => {
   if (isJson(filePath)) return JSON.parse(fs.readFileSync(absPath(filePath)));
 };
 
