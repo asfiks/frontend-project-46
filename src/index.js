@@ -35,9 +35,7 @@ const genDiff = (filePath1, filePath2) => {
   let result = '';
   const obj1 = parsersFile(filePath1);
   const obj2 = parsersFile(filePath2);
-  if (obj1 === null && obj2 === null || obj2 === 'underfind') result = 'There is no data in files';
-  else if (obj1 === 'underfind' && obj2 === 'underfind' || obj2 === null) result = 'There is no data in files';
-  else if (_.isEqual(obj1, obj2) && !hasDateInObject(obj1)) result = 'There is no data in files';
+  if (_.isEqual(obj1, obj2) && !hasDateInObject(obj1)) result = 'There is no data in files';
   else {
     const resulrArr = getCompareObject(obj1, obj2);
     const sortArr = sortDiff(resulrArr);
