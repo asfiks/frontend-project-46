@@ -11,6 +11,7 @@ const parsersFile = (filePath) => {
     const extension = nameFileArr[nameFileArr.length - 1];
     if (extension === 'json') parse = JSON.parse(fs.readFileSync(absPath(filePath)));
     else if (extension === 'yml' || extension === 'yaml') parse = yaml.load(fs.readFileSync(absPath(filePath)));
+        if (parse === null || parse === undefined) parse = {};
     return parse;
 };
 
