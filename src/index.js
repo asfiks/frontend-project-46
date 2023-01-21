@@ -1,18 +1,5 @@
 import _ from 'lodash';
-import * as fs from 'node:fs';
-import path from 'path';
-import { cwd } from 'process';
-
-const absPath = (filePath) => path.resolve(cwd(), filePath);
-
-const isJson = (filePath) => {
-  const arrPath = filePath.split('.');
-  return arrPath[arrPath.length - 1] === 'json';
-};
-
-const getObjectFromJson = (filePath) => {
-  if (isJson(filePath)) return JSON.parse(fs.readFileSync(absPath(filePath)));
-};
+import parsersFile  from './parsers.js';
 
 const getCompareObject = (obj1, obj2) => {
   const objKey1 = Object.keys(obj1);
@@ -45,13 +32,18 @@ const getStringFromArr = (arr) => {
 const hasDateInObject = (obj) => (Object.keys(obj).length > 0);
 
 const genDiff = (filePath1, filePath2) => {
-  const obj1 = getObjectFromJson(filePath1);
-  const obj2 = getObjectFromJson(filePath2);
-  if (hasDateInObject(obj1) || hasDateInObject(obj2)) {
+  let result = '';
+  const obj1 = parsersFile(filePath1);
+  const obj2 = parsersFile(filePath2);
+  if (obj1 === null && obj2 === null || obj2 === 'underfind') result = 'There is no data in files';
+  else if (obj1 === 'underfind' && obj2 === 'underfind' || obj2 === null) result = 'There is no data in files';
+  else if (_.isEqual(obj1, obj2) && !hasDateInObject(obj1)) result = 'There is no data in files';
+  else {
     const resulrArr = getCompareObject(obj1, obj2);
     const sortArr = sortDiff(resulrArr);
-    return getStringFromArr(sortArr);
-  } return 'There is no data in JSON';
+    result = getStringFromArr(sortArr);
+  }
+  return result;
 };
 
 export default genDiff;
