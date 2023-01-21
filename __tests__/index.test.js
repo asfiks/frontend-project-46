@@ -28,3 +28,7 @@ test('genDiff yml files no data', () => {
 test('genDiff', () => {
   expect(genDiff(getFixturePath('file1.yml'), getFixturePath('file2.yml'))).toEqual('- follow: false\n  host: hexlet.io\n- proxy: 123.234.53.22\n- timeout: 50\n+ timeout: 20\n+ verbose: true');
 });
+
+test('genDiff if one of file yml no data', () => {
+  expect(genDiff(getFixturePath('file1.yml'), getFixturePath('file3.yml'))).toEqual('- follow: false\n- host: hexlet.io\n- proxy: 123.234.53.22\n- timeout: 50');
+});
