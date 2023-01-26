@@ -1,25 +1,7 @@
 import _ from 'lodash';
 import parsersFile  from './parsers.js';
-
-const getCompareObject = (obj1, obj2) => {
-  const objKey1 = Object.keys(obj1);
-  const objKey2 = Object.keys(obj2);
-  const result = [];
-  for (const key of objKey1) {
-    if (objKey2.includes(key)) {
-      if (obj1[key] === obj2[key]) {
-        result.push({ name: key, value: obj1[key], id: ' ' });
-      } else {
-        result.push({ name: key, value: obj1[key], id: '-' });
-        result.push({ name: key, value: obj2[key], id: '+' });
-      }
-    } else if (!objKey2.includes(key)) result.push({ name: key, value: obj1[key], id: '-' });
-  }
-  for (const key of objKey2) {
-    if (!objKey1.includes(key)) result.push({ name: key, value: obj2[key], id: '+' });
-  }
-  return result;
-};
+import getDiffTree from './difftree.js'
+import getAnswer from './answer.js'
 
 const sortDiff = (arr) => _.sortBy(arr, 'name');
 
@@ -37,9 +19,8 @@ const genDiff = (filePath1, filePath2) => {
   const obj2 = parsersFile(filePath2);
   if (_.isEqual(obj1, obj2) && !hasDateInObject(obj1)) result = 'There is no data in files';
   else {
-    const resulrArr = getCompareObject(obj1, obj2);
-    const sortArr = sortDiff(resulrArr);
-    result = getStringFromArr(sortArr);
+    const resulrArr = getDiffTree(obj1, obj2);
+    result = getAnswer(resulrArr);
   }
   return result;
 };
