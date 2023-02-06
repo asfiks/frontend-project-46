@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import parsersFile  from './parsers.js';
 import getDiffTree from './difftree.js'
-import stylish from './formater/stylish.js'
+import stylish from './formatters/stylish.js'
 
 const sortDiff = (arr) => _.sortBy(arr, 'name');
 

@@ -8,24 +8,24 @@ const getDiffTree = (obj1, obj2) => {
 
     const result = sortedKeys.map((key) => {
     if (_.isObject(obj1[key]) && _.isObject(obj2[key])) {
-      return { key, type: 'nested', children: getDiffTree(obj1[key], obj2[key]) };
+      return { key, id: 'nested', children: getDiffTree(obj1[key], obj2[key]) };
     }
 
     if (!Object.hasOwn(obj1, key)) {
-      return { key, type: 'added', value: obj2[key] };
+      return { key, id: 'added', value: obj2[key] };
     }
 
     if (!Object.hasOwn(obj2, key)) {
-      return { key, type: 'deleted', value: obj1[key] };
+      return { key, id: 'deleted', value: obj1[key] };
     }
 
     if (obj1[key] !== obj2[key]) {
       return {
-        key, type: 'changed', value1: obj1[key], value2: obj2[key],
+        key, id: 'changed', value1: obj1[key], value2: obj2[key],
       };
     }
 
-    return { key, type: 'unchanged', value: obj2[key] };
+    return { key, id: 'unchanged', value: obj2[key] };
   });
 
   return result;
