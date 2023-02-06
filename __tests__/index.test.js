@@ -12,11 +12,12 @@ test('diff two json with stylish', () => {
       .toEqual(fs.readFileSync(getFixturePath('expectedStylish.txt'), 'utf8'));
 });
 
-/*test('genDiff json files no data', () => {
-  expect(genDiff(getFixturePath('file1.json'), getFixturePath('file2.json'))).toEqual('There is no data in files');
+test('diff two yml with stylish', () => {
+  expect(genDiff(getFixturePath('file1.yml'), getFixturePath('file2.yml')))
+      .toEqual(fs.readFileSync(getFixturePath('expectedStylish.txt'), 'utf8'));
 });
 
-
+/*
 test('genDiff yml files no data', () => {
   expect(genDiff(getFixturePath('file3.yml'), getFixturePath('file4.yml'))).toEqual('There is no data in files');
 });
