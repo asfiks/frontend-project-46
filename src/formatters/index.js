@@ -11,7 +11,7 @@ const formatter = (diff, format) => {
     case 'json':
       return toJson(diff);
     default:
-      return 'Invalid format!';
+      throw new Error('Invalid format!');
   }
 };
 export default formatter;
