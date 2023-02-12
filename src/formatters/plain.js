@@ -11,11 +11,11 @@ const getValue = (value) => {
 const plain = (diff) => {
   const getPlainDiff = (object, path = '') => {
     const result = object
-      .filter((node) => node.id !== 'unchanged')
+      .filter((node) => node.type !== 'unchanged')
       .map((node) => {
-        const { key, id, value } = node;
+        const { key, type, value } = node;
         const pathKey = path + key;
-        switch (id) {
+        switch (type) {
           case 'nested':
             return getPlainDiff(node.children, `${pathKey}.`);
           case 'added':
@@ -25,7 +25,7 @@ const plain = (diff) => {
           case 'changed':
             return `Property '${pathKey}' was updated. From ${getValue(node.value1)} to ${getValue(node.value2)}`;
           default:
-            throw new Error(`Invalid id: ${id}`);
+            throw new Error(`Invaltype type: ${type}`);
         }
       });
 
