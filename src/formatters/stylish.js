@@ -3,25 +3,25 @@ const getIndent = (depth, correctSize = 0) => {
   const spacesCount = 2;
   const indentSize = depth * spacesCount;
   const indent = replacer.repeat(indentSize - correctSize);
-  const parantezIndent = replacer.repeat(indentSize - spacesCount);
-  return [indent, parantezIndent];
+  const bracketIndent = replacer.repeat(indentSize - spacesCount);
+  return [indent, bracketIndent];
 };
 
 const stringify = (value, depth) => {
-  const [indent, parantezIndent] = getIndent(depth);
+  const [indent, bracketIndent] = getIndent(depth);
   if (typeof (value) !== 'object' || value === null) return `${value}`;
   const entries = Object.entries(value);
   const resultArr = entries.map(([key, val]) => `${indent}${key}: ${stringify(val, depth + 1)}`);
-  const result = ['{', ...resultArr, `${parantezIndent}}`];
+  const result = ['{', ...resultArr, `${bracketIndent}}`];
   return result.join('\n');
 };
 
 const stylish = (diff, depth) => {
-  const [indent, parantezIndent] = getIndent(depth, 1);
+  const [indent, bracketIndent] = getIndent(depth, 1);
 
   const strResult = diff.map((node) => {
-    const { key, id, value } = node;
-    switch (id) {
+    const { key, type, value } = node;
+    switch (type) {
       case 'nested':
         return `${indent}  ${key}: ${stylish(node.children, depth + 1)}`;
       case 'deleted':
@@ -35,7 +35,7 @@ const stylish = (diff, depth) => {
     }
   });
 
-  const result = ['{', ...strResult, `${parantezIndent}}`];
+  const result = ['{', ...strResult, `${bracketIndent}}`];
   return result.join('\n');
 };
 
