@@ -16,7 +16,7 @@ const stringify = (value, depth) => {
   return result.join('\n');
 };
 
-const stylish = (diff, depth) => {
+const stylish = (diff, depth = 1) => {
   const [indent, bracketIndent] = getIndent(depth, 1);
 
   const strResult = diff.map((node) => {

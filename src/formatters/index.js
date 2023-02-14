@@ -5,7 +5,7 @@ import toJson from './json.js';
 const formatter = (diff, format) => {
   switch (format) {
     case 'stylish':
-      return stylish(diff, 1);
+      return stylish(diff);
     case 'plain':
       return plain(diff);
     case 'json':

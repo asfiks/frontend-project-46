@@ -1,4 +1,4 @@
-import { test, expect } from '@jest/globals';
+import { test, expect, describe } from '@jest/globals';
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
@@ -8,32 +8,15 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const getFixturePath = (fileName) => path.join(__dirname, '..', '__fixtures__', fileName);
 
-test('diff two json files with stylish', () => {
-  expect(genDiff(getFixturePath('file1.json'), getFixturePath('file2.json'), 'stylish'))
-    .toEqual(fs.readFileSync(getFixturePath('expectedStylish.txt'), 'utf8'));
-});
-
-test('diff two yml files with stylish', () => {
-  expect(genDiff(getFixturePath('file1.yml'), getFixturePath('file2.yml'), 'stylish'))
-    .toEqual(fs.readFileSync(getFixturePath('expectedStylish.txt'), 'utf8'));
-});
-
-test('diff two yml files with plain', () => {
-  expect(genDiff(getFixturePath('file1.yml'), getFixturePath('file2.yml'), 'plain'))
-    .toEqual(fs.readFileSync(getFixturePath('expectedPlain.txt'), 'utf8'));
-});
-
-test('diff two json files with plain', () => {
-  expect(genDiff(getFixturePath('file1.json'), getFixturePath('file2.json'), 'plain'))
-    .toEqual(fs.readFileSync(getFixturePath('expectedPlain.txt'), 'utf8'));
-});
-
-test('diff two json files with json', () => {
-  expect(genDiff(getFixturePath('file1.json'), getFixturePath('file2.json'), 'json'))
-    .toEqual(fs.readFileSync(getFixturePath('expectedJson.txt'), 'utf8'));
-});
-
-test('diff two yml files with json', () => {
-  expect(genDiff(getFixturePath('file1.yml'), getFixturePath('file2.yml'), 'json'))
-    .toEqual(fs.readFileSync(getFixturePath('expectedJson.txt'), 'utf8'));
+describe('test genDiff with different formatters', () => {
+  test.each([
+    ['file1.json', 'file2.json', 'expectedStylish.txt', 'stylish'],
+    ['file1.yml', 'file2.yml', 'expectedStylish.txt', 'stylish'],
+    ['file1.json', 'file2.json', 'expectedPlain.txt', 'plain'],
+    ['file1.yml', 'file2.yml', 'expectedPlain.txt', 'plain'],
+    ['file1.yml', 'file2.yml', 'expectedJson.txt', 'json'],
+    ['file1.json', 'file2.json', 'expectedJson.txt', 'json'],
+  ])('genDiff compares files using different formatters and compares to expected result', (file1, file2, expectedResult, format) => {
+    expect(genDiff(getFixturePath(file1), getFixturePath(file2), format)).toEqual(fs.readFileSync(getFixturePath(expectedResult), 'utf8'));
+  });
 });
